@@ -47,7 +47,7 @@ module KF76489_Noise_Generator (
     // Attenuation Register
     always_ff @(posedge clock, posedge reset) begin
         if (reset)
-            attenuation         <= 4'h0;
+            attenuation         <= 4'hF;
         else if (write_noise_attenuation)
             attenuation         <= internal_data_bus[7:4];
         else
@@ -74,7 +74,7 @@ module KF76489_Noise_Generator (
         else
             divider_count       <= divider_count;
     end
-    assign  divided_clock_tap0_en = (&divider_count) ? 1'b1 : 1'b0;
+    assign  divided_clock_tap0_en = (&divider_count & clock_enable) ? 1'b1 : 1'b0;
 
     // Tap1 (N/512)
     always_ff @(posedge clock, posedge reset) begin
