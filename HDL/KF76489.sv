@@ -140,6 +140,45 @@ module KF76489 (
         .analog_out                 (noise_aout)
     );
 
+
+    //
+    // READY signal
+    //
+    logic           prev_ce_n;
+    logic           negedge_ce_n;
+    logic   [4:0]   wait_count;
+    always_ff @(posedge clock, posedge reset) begin
+        if (reset)
+            prev_ce_n   <= 1'b1;
+        else
+            prev_ce_n   <= CE_N;
+    end
+
+    assign  negedge_ce_n = prev_ce_n & ~CE_N;
+
+    always_ff @(posedge clock, posedge reset) begin
+        if (reset)
+            wait_count  <= 5'b11111;
+        else if (negedge_ce_n)
+            wait_count  <= 5'b00000;
+        else if (clock_enable & ~&wait_count)
+            wait_count  <= wait_count + 5'd1;
+        else
+            wait_count  <= wait_count;
+    end
+
+    always_ff @(posedge clock, posedge reset) begin
+        if (reset)
+            READY       <= 1'b1;
+        else if (negedge_ce_n)
+            READY       <= 1'b0;
+        else if (clock_enable & &wait_count[4:1])
+            READY       <= 1'b1;
+        else
+            READY       <= READY;
+    end
+
+
     //
     // Mixer
     //
