@@ -170,6 +170,8 @@ module KF76489 (
     always_ff @(posedge clock, posedge reset) begin
         if (reset)
             READY       <= 1'b1;
+        else if (CE_N & WE_N)
+            READY       <= 1'b1;
         else if (negedge_ce_n)
             READY       <= 1'b0;
         else if (clock_enable & &wait_count[4:1])
