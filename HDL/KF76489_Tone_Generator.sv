@@ -39,7 +39,7 @@ module KF76489_Tone_Generator (
     // Attenuation Register
     always_ff @(posedge clock, posedge reset) begin
         if (reset)
-            attenuation     <= 4'h0;
+            attenuation     <= 4'hF;
         else if (write_attenuation)
             attenuation     <= internal_data_bus[7:4];
         else
