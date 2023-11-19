@@ -65,18 +65,18 @@ module KF76489_Bus_Control_Logic (
         else
             prev_stable_address <= prev_stable_address;
     end
-                                                                                                 //R210
-    assign  write_tone1_frequency_h = write_flag &  stable_address[0] & (stable_address[3:1] ==  3'b000);
-    assign  write_tone1_frequency_l = write_flag & ~stable_address[0] & (prev_stable_address == 4'b0000);
-    assign  write_tone1_attenuation = write_flag &  stable_address[0] & (stable_address[3:1] ==  3'b100);
-    assign  write_tone2_frequency_h = write_flag &  stable_address[0] & (stable_address[3:1] ==  3'b010);
-    assign  write_tone2_frequency_l = write_flag & ~stable_address[0] & (prev_stable_address == 4'b0010);
-    assign  write_tone2_attenuation = write_flag &  stable_address[0] & (stable_address[3:1] ==  3'b110);
-    assign  write_tone3_frequency_h = write_flag &  stable_address[0] & (stable_address[3:1] ==  3'b001);
-    assign  write_tone3_frequency_l = write_flag & ~stable_address[0] & (prev_stable_address == 4'b0001);
-    assign  write_tone3_attenuation = write_flag &  stable_address[0] & (stable_address[3:1] ==  3'b101);
-    assign  write_noise_control     = write_flag &  stable_address[0] & (stable_address[3:1] ==  3'b011);
-    assign  write_noise_attenuation = write_flag &  stable_address[0] & (stable_address[3:1] ==  3'b111);
+                                                                                                //R210
+    assign  write_tone1_frequency_h = write_flag &  stable_address[0] & (stable_address[3:1] == 3'b000);
+    assign  write_tone1_frequency_l = write_flag & ~stable_address[0] & (prev_stable_address == 4'b0001);
+    assign  write_tone1_attenuation = write_flag &  stable_address[0] & (stable_address[3:1] == 3'b100);
+    assign  write_tone2_frequency_h = write_flag &  stable_address[0] & (stable_address[3:1] == 3'b010);
+    assign  write_tone2_frequency_l = write_flag & ~stable_address[0] & (prev_stable_address == 4'b0101);
+    assign  write_tone2_attenuation = write_flag &  stable_address[0] & (stable_address[3:1] == 3'b110);
+    assign  write_tone3_frequency_h = write_flag &  stable_address[0] & (stable_address[3:1] == 3'b001);
+    assign  write_tone3_frequency_l = write_flag & ~stable_address[0] & (prev_stable_address == 4'b0011);
+    assign  write_tone3_attenuation = write_flag &  stable_address[0] & (stable_address[3:1] == 3'b101);
+    assign  write_noise_control     = write_flag &  stable_address[0] & (stable_address[3:1] == 3'b011);
+    assign  write_noise_attenuation = write_flag &  stable_address[0] & (stable_address[3:1] == 3'b111);
 
 endmodule
 
