@@ -99,16 +99,19 @@ module tb();
     //
     // Task : Write Frequency
     //
+    logic   [9:0]   inv_data;
     task TASK_WRITE_FREQUENCY(input [9:0] data);
     begin
         #(`TB_CYCLE * 0);
+        inv_data = {data[0], data[1], data[2], data[3], data[4],
+                    data[5], data[6], data[7], data[8], data[9]};
         write_frequency_h   = 1'b1;
-        internal_data_bus   = {data[9:6], 4'b0000};
+        internal_data_bus   = {inv_data[9:6], 4'b0000};
         #(`TB_CYCLE * 1);
         write_frequency_h   = 1'b0;
         #(`TB_CYCLE * 1);
         write_frequency_l   = 1'b1;
-        internal_data_bus   = {data[5:0],   2'b00};
+        internal_data_bus   = {inv_data[5:0],   2'b00};
         #(`TB_CYCLE * 1);
         write_frequency_l   = 1'b0;
         #(`TB_CYCLE * 1);

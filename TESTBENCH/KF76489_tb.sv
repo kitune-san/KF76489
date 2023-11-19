@@ -110,12 +110,15 @@ module tb();
     //
     // Task : Write Tone_N Frequency
     //
+    logic   [9:0]   inv_data;
     task TASK_WRITE_FREQUENCY(input [2:0] addr, input [9:0] data);
     begin
         #(`TB_CYCLE * 0);
-        TASK_WRITE_DATA({data[9:6], addr[0], addr[1], addr[2], 1'b1});
+        inv_data = {data[0], data[1], data[2], data[3], data[4],
+                    data[5], data[6], data[7], data[8], data[9]};
+        TASK_WRITE_DATA({inv_data[9:6], addr[0], addr[1], addr[2], 1'b1});
         #(`TB_CYCLE * 1);
-        TASK_WRITE_DATA({data[5:0], 2'b00});
+        TASK_WRITE_DATA({inv_data[5:0], 2'b00});
         #(`TB_CYCLE * 1);
     end
     endtask

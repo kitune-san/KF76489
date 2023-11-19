@@ -22,6 +22,7 @@ module KF76489_Tone_Generator (
     // Registers
     //
     logic   [9:0]   frequency;
+    logic   [9:0]   frequency_inv;
     logic   [3:0]   attenuation;
 
     // Frequency Register
@@ -35,6 +36,11 @@ module KF76489_Tone_Generator (
         else
             frequency       <= frequency;
     end
+
+    //assign  frequency_inv = {<<{frequency}};
+    assign  frequency_inv = {frequency[0], frequency[1], frequency[2], frequency[3], frequency[4],
+                             frequency[5], frequency[6], frequency[7], frequency[8], frequency[9]};
+
 
     // Attenuation Register
     always_ff @(posedge clock, posedge reset) begin
@@ -57,7 +63,7 @@ module KF76489_Tone_Generator (
         else if (~clock_enable)
             divider_count   <= divider_count;
         else if (~|divider_count)
-            divider_count   <= ((~|frequency) ? 10'h1 : frequency) - 10'h1;
+            divider_count   <= ((~|frequency_inv) ? 10'h1 : frequency_inv) - 10'h1;
         else
             divider_count   <= divider_count - 10'h1;
     end
