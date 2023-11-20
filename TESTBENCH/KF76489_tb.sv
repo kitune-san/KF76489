@@ -67,8 +67,11 @@ module tb();
     logic   [7:0]   D_IN;
     logic           READY;
     logic   [7:0]   AOUT;
+    logic   [7:0]   AOUT_INVERT;
 
     KF76489 u_76489 (.*);
+
+    KF76489_Invert_AOUT u_76489_Invert_AOUT(.AOUT_in(AOUT), .AOUT_out(AOUT_INVERT));
 
     always_ff @(posedge clock, posedge reset) begin
         if (reset)
